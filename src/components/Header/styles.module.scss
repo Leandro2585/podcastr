@@ -1,0 +1,19 @@
+@import '../../styles/colors.scss';
+
+.container {
+  background: $white;
+  height: 4.5rem;
+  display: flex;
+  align-items: center;
+  padding: 1rem 3rem;
+  border-bottom: 1px solid $gray-100;
+  p {
+    margin-left: 2rem;
+    padding: 0.25rem 0.25rem;
+    border-left: 1px solid $gray-100;
+  }
+  span {
+    margin-left: auto;
+    text-transform: capitalize;
+  }
+}
