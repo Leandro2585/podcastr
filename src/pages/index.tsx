@@ -1,10 +1,12 @@
+import { useContext } from 'react'
 import { GetStaticProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
+import { PlayerContext } from '../contexts/PlayerContext'
 import styles from '../styles/home.module.scss'
-import covertDurationToTimeString from '../utils/convertDurationToTimeString'
+import convertDurationToTimeString from '../utils/convertDurationToTimeString'
 import api from '../services/api'
 
 interface Episode {
@@ -24,6 +26,8 @@ interface HomeProps {
 }
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
+  const { play } = useContext(PlayerContext)
+
   return (
     <div className={styles.homepage}>
       <section className={styles.latestEpisodes}>
@@ -49,7 +53,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                   <span>{episode.durationAsString}</span>
                 </div>
 
-                <button type="button">
+                <button type="button" onClick={() => play(episode)}>
                   <img src="/play-green.svg" alt="Tocar episódio"/>
                 </button>
               </li>
@@ -57,7 +61,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
           })}
         </ul>
       </section>
-      <section className={style.allEpisodes}>
+      <section className={styles.allEpisodes}>
         <h2>Todos episódios</h2>
         <table cellSpacing={0}>
           <thead>
@@ -92,7 +96,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                 <td>{episode.durationAsString}</td>
                 <td>
                   <button type="button">
-                    <img src="/play-button.svg" alt="Tocar episódio"/>
+                    <img src="/play-green.svg" alt="Tocar episódio"/>
                   </button>
                 </td>
               </tr>
@@ -120,7 +124,7 @@ export const getStaticProps: GetStaticProps = async () => {
       thumbnail: episode.thumbnail,
       members: episode.members,
       publishedAt: format(parseISO(episode.published_at), 'd MMM yy', { locale: ptBR }),
-      durationAsString: covertDurationToTimeString(Number(episode.file.duration)),
+      durationAsString: convertDurationToTimeString(Number(episode.file.duration)),
       duration: Number(episode.file.duration),
       url: episode.file.url
     }

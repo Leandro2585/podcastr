@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { format, parseISO } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
-import covertDurationToTimeString from '../../utils/convertDurationToTimeString'
+import convertDurationToTimeString from '../../utils/convertDurationToTimeString'
 import api from '../../services/api'
 import styles from '../../styles/episode.module.scss'
 
@@ -51,7 +51,10 @@ export default function Episode({ episode }: EpisodeProps) {
         <span>{episode.durationAsString}</span>
       </header>
 
-      <div className={styles.description} dangeourslySetInnerHTML={{ __html: episode.description }}/>
+      <div
+        className={styles.description}
+        dangerouslySetInnerHTML={{ __html: episode.description }}
+        />
     </div>
   )
 }
@@ -72,7 +75,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       thumbnail: data.thumbnail,
       members: data.members,
       publishedAt: format(parseISO(data.published_at), 'd MMM yy', { locale: ptBR }),
-      durationAsString: covertDurationToTimeString(Number(data.file.duration)),
+      durationAsString: convertDurationToTimeString(Number(data.file.duration)),
       duration: Number(data.file.duration),
       description: data.description,
       url: data.file.url
