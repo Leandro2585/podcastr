@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from 'react'
+import { createContext, useState, ReactNode, Dispatch } from 'react'
 
 interface Episode {
   title: string;
@@ -17,12 +17,11 @@ interface PlayerContextData {
   isLooping: boolean;
   togglePlay: () => void;
   toggleLoop: () => void;
-  toggleShuffle: () => void;
   isShuffling: boolean;
   hasPrevious: boolean;
   playPrevious: () => void;
   episodesList: Episode[];
-  setIsShuffling: () => void;
+  setIsShuffling: Dispatch<boolean>;
   setPlayingState: (state: boolean) => void;
   clearPlayerState: () => void;
   currentEpisodeIndex: number;
@@ -112,4 +111,5 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
     }}>
       {children}
     </PlayerContext.Provider>
+  )
 }
