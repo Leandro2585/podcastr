@@ -17,6 +17,7 @@ interface PlayerContextData {
   isLooping: boolean;
   togglePlay: () => void;
   toggleLoop: () => void;
+  toggleShuffle: () => void;
   isShuffling: boolean;
   hasPrevious: boolean;
   playPrevious: () => void;
